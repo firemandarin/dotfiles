@@ -13,7 +13,7 @@
 @define-color waybar-workspace-empty-fg #505050;
 
 * {
-  background-color: transparent;
+  background-color: #000000;
   color: @waybar-fg;
   border: none;
   border-radius: 0;
@@ -47,33 +47,41 @@ window#waybar {
 }
 
 #workspaces button {
-  padding: 0 2px;
-  margin: 0 1px;
-  min-width: 12px;
+  padding: 0 6px;
+  margin: 0 2px;
+  min-width: 14px;
   min-height: 12px;
   background-color: transparent;
   color: @waybar-workspace-empty-fg;
   font-weight: 400;
-  transition: all 100ms ease;
-  border-radius: 0;
+  transition: all 200ms ease;
+  border-radius: 4px;
   border: none;
+  opacity: 0.5;
 }
 
 
 
 #workspaces button.focused {
-  background-color: @waybar-workspace-active-bg;
-  font-weight: 500;
+  background-color: transparent;
+  color: @waybar-fg;
+  font-weight: 700;
+  border: none;
+  opacity: 1;
+  border-bottom: 0px solid @waybar-fg;
+}
+
+#workspaces button:hover {
+  background-color: transparent;
+  opacity: 0.8;      /* Slightly brighter on hover but still distinct from active */
+  box-shadow: none;
+  text-shadow: none;
 }
 
 #workspaces button.persistent,
 #workspaces button.empty {
   color: @waybar-workspace-empty-fg;
   opacity: 0.5;
-}
-
-#workspaces button.visible {
-  color: @waybar-workspace-occupied-fg;
 }
 
 #mpris.paused {
@@ -93,6 +101,7 @@ window#waybar {
 #mpris,
 #clock,
 #custom-idle-indicator,
+#language
 #custom-dnd-indicator {
   padding: 0 6px;
   font-weight: 600;
