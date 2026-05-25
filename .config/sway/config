@@ -20,24 +20,24 @@ input * {
 set $mod Mod4
 
 # Vim-style but remapped to J K L ;
-set $left j
-set $down k
-set $up l
-set $right semicolon
+set $left h
+set $down j
+set $up k
+set $right l
 
-set $term kitty
+set $term foot
 
 #set $rofi_cmd rofi -terminal '$term'
 #set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
 bindsym Mod1+Tab exec swaymsg exec 'rofi -show window -theme ~/.config/rofi/config.rasi'
-bindsym $mod+d exec ~/.config/rofi/launchers/type-1/launcher.sh
+bindsym $mod+space exec ~/.config/rofi/launchers/type-1/launcher.sh 
+focus_follows_mouse no
 
 # ╭──────────────────────────────────────────────╮
 # │ APPEARANCE                                   │
 # ╰──────────────────────────────────────────────╯
 
-gaps inner 20
-#gaps outer 55
+gaps inner 5
 smart_gaps on
 
 default_border pixel 3
@@ -73,7 +73,7 @@ swayidle -w \
 # │ OUTPUT / WALLPAPER                           │
 # ╰──────────────────────────────────────────────╯
 
-output * bg ~/Pictures/Walls/a_forest_of_trees_with_fog.jpg fill
+output * bg ~/Pictures/Wallpapers/a_beach_with_waves_and_rocks.jpg fill
 output DP-2 mode 2560x1440@164.958Hz adaptive_sync on
 
 # ╭──────────────────────────────────────────────╮
@@ -91,6 +91,7 @@ exec qbittorrent
 for_window [app_id="qbittorrent"] floating enable, resize set width 960 height 540, move position center
 for_window [app_id="thunar"] floating enable, resize set width 1000 height 600, move position center
 for_window [app_id="imv"] floating enable, resize set width 960 height 540, move position center
+for_window [app_id="galculator"] floating enable, move position center
 
 #for_window [app_id="qbittorrent"] move scratchpad
 
@@ -100,14 +101,15 @@ for_window [app_id="imv"] floating enable, resize set width 960 height 540, move
 # ╰──────────────────────────────────────────────╯
 
 bindsym $mod+Return exec $term
-#bindsym $mod+d exec $menu
 bindsym $mod+q kill
+bindsym $mod+Shift+r reload
+bindsym $mod+b exec firefox
+bindsym $mod+f exec thunar
+bindsym $mod+e exec geany
 
-bindsym $mod+Shift+c reload
+
 
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
-bindsym $mod+s exec $term -e spotify_player
-
 
 # ╭──────────────────────────────────────────────╮
 # │ SCREEN CAPTURE                               │
@@ -121,10 +123,10 @@ bindsym $mod+Shift+p exec grim - | wl-copy
 # │ FOCUS MOVEMENT (JKL;)                        │
 # ╰──────────────────────────────────────────────╯
 
-bindsym $mod+$left focus left
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
-bindsym $mod+$right focus right
+#bindsym $mod+$left focus left
+#bindsym $mod+$down focus down
+#bindsym $mod+$up focus up
+#bindsym $mod+$right focus right
 
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -178,13 +180,13 @@ bindsym $mod+Shift+0 move container to workspace number 10
 # │ LAYOUT                                      │
 # ╰──────────────────────────────────────────────╯
 
-bindsym $mod+b splith
+bindsym $mod+h splith
 bindsym $mod+v splitv
-bindsym $mod+f fullscreen
+#bindsym $mod+f fullscreen
 
 floating_modifier $mod normal
 bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
+#bindsym $mod+space focus mode_toggle
 
 
 # ╭──────────────────────────────────────────────╮
