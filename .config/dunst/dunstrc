@@ -1,0 +1,97 @@
+[global]
+    ### Display & Layout ###
+    # Monitor where notifications appear (0 = primary)
+    monitor = 0
+    follow = mouse
+
+    # Sizing matching your Mako setup (width=320, height=100)
+    width = 320
+    height = (100, 100)
+    origin = top-right
+    offset = 10x10
+    notification_limit = 10
+
+    # Progress bar styling
+    progress_bar = true
+    progress_bar_height = 4
+    progress_bar_frame_width = 1
+    progress_bar_min_width = 150
+    progress_bar_max_width = 300
+
+    # Sort notifications by newest first (sort=-time)
+    sort = yes
+
+    ### Geometry & Spacing ###
+    # Margin and Padding matching your Mako setup (margin=10, padding=10)
+    gap_size = 10
+    padding = 10
+    horizontal_padding = 10
+    text_icon_padding = 10
+
+    # Border Styling (border-size=0, border-radius=4)
+    frame_width = 0
+    corner_radius = 4
+
+    ### Text & Fonts ###
+    # Exact font from your config (font=Inter 11)
+    font = Inter 11
+    
+    line_height = 0
+    markup = full
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    vertical_alignment = center
+    show_age_threshold = 60
+    word_wrap = yes
+    ignore_newline = no
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = yes
+
+    ### Icons ###
+    # Icon handling (icons=1, max-icon-size=64)
+    enable_recursive_icon_lookup = true
+    icon_position = left
+    min_icon_size = 32
+    max_icon_size = 64
+    icon_path = /usr/share/icons/gnome/16x16/status:/usr/share/icons/gnome/16x16/devices
+
+    ### History & Timeouts ###
+    # Timeout matching your default (default-timeout=10000 -> 10s)
+    # ignore-timeout=1 forces Dunst to honor this timeout over app requests
+    sticky_history = yes
+    history_length = 10
+
+    # Mouse bindings
+    mouse_left_click = close_current
+    mouse_middle_click = do_action
+    mouse_right_click = close_all
+
+[urgency_low]
+    # Background color mapped from #0d0d0dee (Dunst uses #RRGGBBAA format for transparency)
+    background = "#0d0d0dee"
+    foreground = "#c1c1c1"
+    frame_color = "#b3c7cc"
+    timeout = 10
+
+[urgency_normal]
+    background = "#0d0d0dee"
+    foreground = "#c1c1c1"
+    frame_color = "#b3c7cc"
+    timeout = 10
+
+[urgency_high]
+    background = "#0d0d0dee"
+    foreground = "#c1c1c1"
+    frame_color = "#b3c7cc"
+    timeout = 0
+
+### Custom Rules ###
+
+# Replicating your [app-name=lol] block
+# This matches the app name, keeps it on top, and disables history logging
+[app_lol]
+    appname = lol
+    history_ignore = yes
+    # Dunst doesn't have an exact "layer=overlay" rule per app, but it defaults 
+    # to overriding window managers globally to stay on top.

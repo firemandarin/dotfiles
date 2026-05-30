@@ -33,3 +33,27 @@ set -g fish_color_comment 5c6370
 alias dnf "dnf --color=always"
 
 fish_add_path $HOME/.cargo/bin
+
+fish_add_path /home/lesszi/.spicetify
+
+function pomo
+    set duration 25
+    if test (count $argv) -gt 0
+        set duration $argv[1]
+    end
+    clear
+    echo -e "\n  [ 󱎫 Pomodoro Started: $duration minutes ]\n"
+    # Simple countdown loops
+    set seconds (math $duration \* 60)
+    while test $seconds -gt 0
+        set mins (math -s0 $seconds / 60)
+        set secs (math $seconds % 60)
+        printf "\r  ⏱️  %02d:%02d remaining..." $mins $secs
+        sleep 1
+        set seconds (math $seconds - 1)
+    end
+    clear
+    echo -e "\n  [ 󰔛 Time's up! Take a break. ]\n"
+    # Play a subtle system beep if available
+    echo -e "\a"
+end
