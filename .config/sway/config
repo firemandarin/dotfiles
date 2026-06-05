@@ -22,9 +22,13 @@ set $right l
 # #BEHAVIOR
 focus_follows_mouse no
 
+# Essential environment syncing for Screen Sharing
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
 # #APPEARANCE
-gaps inner 5
-#smart_gaps on
+gaps inner 15
+smart_gaps on
 
 font pango:JetBrains Mono 12
 default_border pixel 1
@@ -47,12 +51,27 @@ input type:pointer {
     pointer_accel 0
 }
 
+# --- Media Controls ---
+
+# Volume Control
+bindsym XF86AudioRaiseVolume exec pamixer -i 5
+bindsym XF86AudioLowerVolume exec pamixer -d 5
+bindsym XF86AudioMute exec pamixer -t
+
+# Playback Control
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Mic Mute
+bindsym XF86AudioMicMute exec pamixer --default-source -t
+
 # #OUTPUT / HARDWARE
-output * bg ~/Pictures/Wallpapers/wallhaven-eyevdo.jpg fill
+output * bg ~/Pictures/Wallpapers/a_forest_of_trees_with_fog.jpg fill
 output DP-2 mode 2560x1440@164.958Hz adaptive_sync on
 
 # #AUTOSTART
-exec dunst
+exec mako
 exec qbittorrent
 exec waybar
 
@@ -74,17 +93,18 @@ for_window [app_id="galculator"] floating enable, move position center
 for_window [app_id="io.github.celluloid_player.Celluloid"] floating enable
 for_window [class="Celluloid"] floating enable
 for_window [app_id="mpv"] floating enable
+for_window [class="steam"] floating enable
+for_window [app_id="pavucontrol"] floating enable, resize set 600 400, move position center
 
 # #WORKSPACE ASSIGNMENTS
-assign [class="^com\.valvesoftware\.Steam$"] workspace number 3
-assign [class="^Spotify$"] workspace number 2
+assign [app_id="^steam$"] workspace number 3
+assign [app_id="^spotify$"] workspace number 2
 assign [app_id="^firefox$"] workspace number 1
 assign [app_id="^org.remmina.Remmina$"] workspace number 4
 
 # #KEYBINDINGS - APPLICATIONS
 bindsym $mod+Return exec $term
 bindsym $mod+space exec ~/.config/rofi/launchers/type-2/launcher.sh 
-#bindsym Mod1+Tab exec rofi -show window -theme ~/.config/rofi/config.rasi
 bindsym mod1+Tab workspace next_on_output
 bindsym $mod+f exec firefox
 bindsym $mod+e exec thunar
