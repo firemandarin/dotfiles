@@ -8,11 +8,12 @@
 * {
   font-family: JetBrains Mono;
   font-size: 14px;
+  font-weight: bold;
 }
 
 /* MAIN BAR */
 window#waybar {
-  background: #141414;       /* Slightly darker slate-black color */
+  background: #000000; /* background: #141414; */       /* Slightly darker slate-black color */
   color: #e6e6e6;
   box-shadow: none;          /* Removes the shadow under the bar */
   

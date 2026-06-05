@@ -1,7 +1,7 @@
 {
   "layer": "top",
-  "position": "bottom",
-  "height": 32,
+  "position": "top",
+  "height": 28,
   "margin-top": 0,
   "margin-left": 0,
   "margin-right": 0,
@@ -23,10 +23,8 @@
     "custom/sep",
     "clock",
     "custom/sep",
-    "group/tray-drawer",
-    "custom/sep",
-    "custom/power",
-     "custom/sep"
+    "group/tray-drawer"
+ 
   ],
 
   "sway/workspaces": {
