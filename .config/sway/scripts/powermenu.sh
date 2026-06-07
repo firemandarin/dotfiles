@@ -1,10 +1,19 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-chosen=$(echo -e "Shutdown\nReboot\nLock Screen\nExit Session" | rofi -dmenu -i -p "Power" -theme ~/.config/rofi/powermenu.rasi)
+choice=$(printf "Lock\nLogout\nReboot\nShutdown" | \
+    wofi --dmenu --prompt "Power")
 
-case "$chosen" in
-    "Shutdown") systemctl poweroff ;;
-    "Reboot") systemctl reboot ;;
-    "Lock Screen") ~/.config/sway/scripts/lock.sh ;;
-    "Exit Session") swaymsg exit ;;
+case "$choice" in
+    Lock)
+        ~/.config/sway/scripts/lock.sh
+        ;;
+    Logout)
+        swaymsg exit
+        ;;
+    Reboot)
+        systemctl reboot
+        ;;
+    Shutdown)
+        systemctl poweroff
+        ;;
 esac

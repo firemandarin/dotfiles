@@ -1,7 +1,7 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 28,
+  "height": 30,
   "margin-top": 0,
   "margin-left": 0,
   "margin-right": 0,
@@ -23,7 +23,10 @@
     "custom/sep",
     "clock",
     "custom/sep",
-    "group/tray-drawer"
+    "group/tray-drawer",
+    "custom/sep",
+    "custom/power",
+    "custom/sep"
  
   ],
 
@@ -99,7 +102,7 @@
 
   "custom/power": {
     "format": "⏻",
-    "on-click": "~/.config/sway/scripts/powermenu.sh",
-    "tooltip": false
+    "on-click": "~/.config/rofi/powermenu/type-1/powermenu.sh",
+    "tooltip": false 
   }
 }

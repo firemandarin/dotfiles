@@ -40,39 +40,35 @@ window#waybar {
 /* ================= WORKSPACES ================= */
 
 #workspaces button {
-  color: #b8b8b8;
+  color: #888888;           /* dim white */
   background: transparent;
 
-  /* Swapped padding to fit the border layout inside the bar height */
-  padding: 0 8px;
-  margin: 2px 2px;             
+  padding: 0 2px;
+  margin: 2px 2px;
 
-  border-radius: 0;        /* NO ROUNDING */
-  
-  /* Use an explicit 1px invisible border so the button size stays identical when active */
-  border: 1px solid transparent;
+  border: none;
+  border-radius: 0;
   min-width: 18px;
 }
 
 /* hover */
 #workspaces button:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: transparent;
+  color: #cfcfcf;
 }
 
-/* active workspace (flat blue block with a dim separator-style border) */
+/* active workspace */
 #workspaces button.focused {
-  background: #718096;
-  color: white;
-  border-radius: 1;        /* enforce sharp edges */
-  
-  /* The crisp dim border around the workspace box */
-  border: 1px solid rgba(200, 200, 200, 0.25);
+  color: #e6e6e6;           /* same as the rest of the bar text */
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 /* urgent */
 #workspaces button.urgent {
-  background: #ef4444;
-  color: white;
+  color: #ef4444;
+  background: transparent;
 }
 
 /* ================= OTHER MODULES ================= */

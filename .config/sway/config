@@ -23,8 +23,8 @@ set $right l
 focus_follows_mouse no
 
 # Essential environment syncing for Screen Sharing
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+# exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+# exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
 # #APPEARANCE
 gaps inner 15
@@ -74,12 +74,16 @@ output DP-2 mode 2560x1440@164.958Hz adaptive_sync on
 exec mako
 exec qbittorrent
 exec waybar
+exec nm-applet
 
-## #LOCKING
-exec_always pkill swayidle; swayidle -w \
-         timeout 900 'swaymsg "output * power off"' \
-             resume 'swaymsg "output * power on"' \
-         before-sleep 'swaylock -f -c 121212'
+# LOCKING
+exec_always {
+    swayidle -w \
+        timeout 900 '~/.config/sway/lock.sh' \
+        timeout 930 'swaymsg "output * dpms off"' \
+        resume 'swaymsg "output * dpms on"' \
+        before-sleep '~/.config/sway/lock.sh'
+}
 
 # Prevent display sleep/locking when any game or video goes fullscreen
 for_window [app_id="^.*"] inhibit_idle fullscreen
@@ -87,7 +91,7 @@ for_window [class="^.*"] inhibit_idle fullscreen
 
 # #WINDOW RULES
 for_window [app_id="qbittorrent"] floating enable, resize set width 960 height 540, move position center
-for_window [app_id="thunar"] floating enable, resize set width 1000 height 600, move position center
+# for_window [app_id="thunar"] floating enable, resize set width 1000 height 600, move position center
 for_window [app_id="imv"] floating enable, resize set width 960 height 540, move position center
 for_window [app_id="galculator"] floating enable, move position center
 for_window [app_id="io.github.celluloid_player.Celluloid"] floating enable
@@ -115,6 +119,8 @@ bindsym $mod+q kill
 bindsym $mod+Shift+r reload
 bindsym $mod+o exec ~/.config/sway/scripts/lock.sh
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
+#bindsym $mod+i scratchpad show
+#bindsym $mod+Shift+I move scratchpad
 
 # #SCREEN CAPTURE
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
