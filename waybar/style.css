@@ -1,0 +1,134 @@
+/* =========================
+   Waybar Sway Dark (i3-like)
+   Left-aligned workspaces
+   No rounded corners
+   ========================= */
+
+/* GENERAL */
+* {
+    font-family: "JetBrainsMono Nerd Font Mono";
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* MAIN BAR */
+window#waybar {
+  background: #1A1A1A; /* background: #141414; */       /* Slightly darker slate-black color */
+  color: #e6e6e6;
+  box-shadow: inset 1 0px 0 rgba(120, 120, 120, 0.35);          /* Removes the shadow under the bar */
+
+}
+
+/* =========================
+   FORCE LEFT ALIGNMENT
+   ========================= */
+
+/* remove spacing that pushes workspace in */
+#workspaces {
+  margin: 0;
+  padding: 0;
+}
+
+/* LEFT EDGE ALIGNMENT FIX */
+.modules-left {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* ================= WORKSPACES ================= */
+
+#workspaces {
+    margin: 0;
+    padding: 0;
+}
+
+#workspaces button {
+    color: #696969;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    padding: 0 5px;      /* more spacing */
+    margin: 0;
+    min-width: 18px;
+}
+
+/* Workspace icon size */
+#workspaces button label {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Hover */
+#workspaces button:hover {
+    background: transparent;
+    color: #b0b0b0;
+}
+
+/* Active workspace */
+#workspaces button.focused {
+    background: transparent;
+    color: #ffffff;
+    border: none;
+    box-shadow: none;
+}
+
+/* Urgent workspace */
+#workspaces button.urgent {
+    color: #ef4444;
+    background: transparent;
+}
+
+/* ================= OTHER MODULES ================= */
+
+#sway-window, #mpris, #pulseaudio, #sway-language, #clock, #tray {
+  box-shadow: none;        
+}
+
+#sway-window {
+  color: #dcdcdc;
+}
+
+#mpris {
+  color: #cfcfcf;
+}
+
+#pulseaudio {
+  color: #e6e6e6;
+}
+
+#pulseaudio.muted {
+  color: #ff6b6b;
+}
+
+#sway-language {
+  color: #e6e6e6;
+}
+
+#clock {
+  color: #ffffff;
+}
+
+#tray {
+  padding: 0 6px;
+}
+
+/* separator */
+#custom-sep {
+  color: rgba(200, 200, 200, 0.25);
+}
+
+/* ================= TOOLTIP / CALENDAR STYLING ================= */
+tooltip {
+  background: #141414;       
+  border: 1px solid rgba(200, 200, 200, 0.25); 
+  border-radius: 0px;        
+}
+
+tooltip label {
+  color: #e6e6e6;
+  font-family: "JetBrains Mono"; 
+  padding: 6px;
+}

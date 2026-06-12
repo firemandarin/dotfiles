@@ -1,0 +1,218 @@
+# =========================================================
+# SWAY CONFIG (STREAMLINED & CORRECTED)
+# =========================================================
+
+# #KEYBOARD
+input * {
+    xkb_layout us,hu
+    xkb_variant ,qwerty
+    xkb_options grp:alt_shift_toggle,caps:super
+}
+
+# #VARIABLES
+set $mod Mod4
+set $term kitty
+
+# Vim-style remapping placeholders
+set $left h
+set $down j
+set $up k
+set $right l
+
+# #BEHAVIOR
+focus_follows_mouse no
+
+# Essential environment syncing for Screen Sharing
+# exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+# exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+# #APPEARANCE
+gaps inner 10
+#smart_gaps on
+
+#font pango:JetBrains Mono 11
+font pango:Noto Sans Regular 11
+default_border pixel 2
+default_floating_border pixel 2
+#hide_edge_borders smart
+
+#titlebar_border_thickness 0
+#titlebar_padding 3
+
+# Cyan
+#client.focused #718096 #404552 #f7fafc #718096 #718096 
+# grey borders
+#client.focused #141414 #141414 #e6e6e6 #3b82f6 #141414
+# Fluent
+# client.focused #0078d4 #141414 #ffffff #3b82f6 #0078d4
+# Colloid dark
+# Example for non-focused windows (muted grey)
+#client.focused #dddddd #404552 #f7fafc #dddddd #dddddd
+
+# Syntax: border | background | text | indicator | child_border
+
+# border | background | text | indicator | child_border
+# border | background | text | indicator | child_border
+
+client.focused          #9FA3A8 #000000 #FFFFFF #9FA3A8 #9FA3A8
+client.focused_inactive #000000 #000000 #808080 #000000 #000000
+client.unfocused        #000000 #000000 #808080 #000000 #000000
+client.urgent           #FF5555 #FF5555 #FFFFFF #FF5555 #FF5555
+client.placeholder      #000000 #000000 #FFFFFF #000000 #000000
+
+# #INPUT DEVICES
+input type:pointer {
+    accel_profile "flat"
+    pointer_accel 0
+}
+
+# --- Media Controls ---
+
+# Volume Control
+bindsym XF86AudioRaiseVolume exec pamixer -i 5
+bindsym XF86AudioLowerVolume exec pamixer -d 5
+bindsym XF86AudioMute exec pamixer -t
+
+# Playback Control
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Mic Mute
+bindsym XF86AudioMicMute exec pamixer --default-source -t
+
+# #OUTPUT / HARDWARE
+output * bg ~/Pictures/Wallpapers/a_forest_of_trees_with_fog.jpg fill
+output DP-2 mode 2560x1440@164.958Hz adaptive_sync on
+
+# #AUTOSTART
+exec sleep 2 && nm-applet --indicator &
+exec sleep 3 && qbittorrent --tray &
+exec sleep 3 && --no-startup-id qbittorrent --minimize --tray &
+#exec qbittorrent
+exec mako
+exec waybar
+#exec dbus-update-activation-environment --all && waybar
+exec pipewire
+exec wireplumber
+exec dbus-update-activation-environment --all
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec autotiling
+seat * xcursor_theme Adwaita 24
+
+## Lock
+# LOCKING
+
+exec_always pkill swayidle; swayidle -w \
+    timeout 900 '~/.config/sway/lock.sh' \
+    timeout 910 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep '~/.config/sway/lock.sh'
+
+# Force the compositor to wake up on input
+input * xkb_switch_layout 0
+
+# Prevent display sleep/locking when any game or video goes fullscreen
+for_window [app_id="^.*"] inhibit_idle fullscreen
+for_window [class="^.*"] inhibit_idle fullscreen
+
+# #WINDOW RULES
+for_window [app_id="qbittorrent"] floating enable, resize set width 960 height 540, move position center
+# for_window [app_id="thunar"] floating enable, resize set width 1000 height 600, move position center
+for_window [app_id="imv"] floating enable, resize set width 960 height 540, move position center
+for_window [app_id="galculator"] floating enable, move position center
+for_window [app_id="io.github.celluloid_player.Celluloid"] floating enable
+for_window [class="Celluloid"] floating enable
+for_window [app_id="mpv"] floating enable
+for_window [class="steam"] floating enable
+for_window [app_id="pavucontrol"] floating enable, resize set 600 400, move position center
+
+# #WORKSPACE ASSIGNMENTS
+assign [app_id="^steam$"] workspace number 3
+assign [app_id="^spotify$"] workspace number 2
+assign [app_id="^firefox$"] workspace number 1
+assign [app_id="^org.remmina.Remmina$"] workspace number 4
+
+# #KEYBINDINGS - APPLICATIONS
+bindsym $mod+Return exec $term
+bindsym $mod+space exec ~/.config/rofi/launchers/type-2/launcher.sh 
+bindsym mod1+Tab workspace next_on_output
+bindsym $mod+f exec firefox
+bindsym $mod+e exec thunar
+bindsym $mod+g exec geany
+
+# #KEYBINDINGS - SYSTEM CONTROLS
+bindsym $mod+q kill
+bindsym $mod+Shift+r reload
+bindsym $mod+o exec ~/.config/sway/scripts/lock.sh
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
+#bindsym $mod+i scratchpad show
+#bindsym $mod+Shift+I move scratchpad
+
+# #SCREEN CAPTURE
+# bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
+# bindsym $mod+Shift+p exec grim - | wl-copy
+
+bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy --type image/png
+bindsym $mod+Shift+p exec grim - | wl-copy --type image/png
+
+# #NAVIGATION - WINDOW FOCUS
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# #NAVIGATION - MOVE WINDOWS
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# #WORKSPACES - SWITCHING
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+# #WORKSPACES - MOVING CONTAINERS
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# #LAYOUT CONTROL
+bindsym $mod+h splith
+bindsym $mod+v splitv
+floating_modifier $mod normal
+bindsym $mod+Shift+space floating toggle
+
+# #SCRATCHPAD
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# #RESIZE MODE
+mode "resize" {
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# #SYSTEM CONFIG INCLUDE
+include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
