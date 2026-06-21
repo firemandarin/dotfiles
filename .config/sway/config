@@ -10,7 +10,7 @@ set $term kitty
 input * {
     xkb_layout us,hu
     xkb_variant ,qwerty
-    xkb_options caps:super
+    xkb_options grp:alt_shift_toggle,caps:super
 }
 
 input type:pointer {
@@ -40,7 +40,8 @@ client.urgent           #FF5555 #FF5555 #FFFFFF #FF5555 #FF5555
 client.placeholder      #000000 #000000 #FFFFFF #000000 #000000
 
 ### OUTPUT / MONITOR
-output * bg ~/Pictures/Wallpapers/a_forest_of_trees_with_fog.jpg fill
+#output * bg ~/Pictures/Wallpapers/a_forest_of_trees_with_fog.jpg fill
+output * bg ~/Pictures/Wallpapers/wallhaven-49vrzd.jpg fill
 output DP-2 mode 2560x1440@164.958Hz adaptive_sync on
 
 ### ENVIRONMENT (FIXED FOR DEBIAN / WAYLAND)
@@ -48,20 +49,26 @@ exec_always dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CUR
 exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
 ### AUTOSTART (NO DUPLICATION TRAPS)
-exec mako
-exec waybar
-exec nm-applet --indicator
-exec qbittorrent && killall qbittorrent &
+#exec mako
+#exec waybar
+#exec nm-applet --indicator
+#exec qbittorrent 
+#exec autotiling
 
-# NOTE: autotiling is kept, but not delayed with sleep
-exec autotiling
+### AUTOSTART
+exec mako
+exec_always --no-startup-id killall waybar; waybar
+exec_always --no-startup-id killall autotiling; autotiling
+exec nm-applet --indicator
+exec qbittorrent 
+# qbittorrent removed from here if you prefer manual start
 
 ### LOCKING / IDLE (STABLE PATTERN)
 exec swayidle -w \
-    timeout 900 '~/.config/sway/lock.sh' \
-    timeout 910 'swaymsg "output * dpms off"' \
-    resume 'swaymsg "output * dpms on"' \
-    before-sleep '~/.config/sway/lock.sh'
+     timeout 300 'swaylock -f -c 000000' \
+     timeout 600 'swaymsg "output * power off"' \
+     resume 'swaymsg "output * power on"' \
+     before-sleep 'swaylock -f -c 000000'
 
 ### IDLE RULES
 # Only inhibit idle for fullscreen apps
@@ -72,24 +79,24 @@ bindsym XF86AudioRaiseVolume exec pamixer -i 5
 bindsym XF86AudioLowerVolume exec pamixer -d 5
 bindsym XF86AudioMute exec pamixer -t
 bindsym XF86AudioMicMute exec pamixer --default-source -t
-
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 ### KEYBINDINGS (LAUNCH / APPS)
 bindsym $mod+Return exec $term
-bindsym $mod+space exec wofi --show drun
-
+bindsym $mod+space exec ~/.config/wofi/menu/menu.sh
 bindsym $mod+f exec firefox
 bindsym $mod+e exec thunar
 bindsym $mod+g exec geany
-
 bindsym $mod+q kill
+#bindsym $mod+x kill
 bindsym $mod+Shift+r reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
-
+bindsym $mod+shift+f fullscreen toggle
 bindsym $mod+o exec ~/.config/sway/scripts/lock.sh
+bindsym $mod+Shift+w exec swaymsg "output * dpms on"
+bindsym mod1+Tab workspace next_on_output
 
 ### SCREENSHOT
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy --type image/png
