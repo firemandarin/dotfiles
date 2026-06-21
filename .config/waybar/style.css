@@ -1,124 +1,115 @@
 /* =========================
-   Waybar Sway Dark (i3-like)
-   Left-aligned workspaces
-   No rounded corners
+   WAYBAR SWAY DARK (CLEAN FIXED)
    ========================= */
 
-/* GENERAL */
 * {
-  font-family: JetBrains Mono;
-  font-size: 14px;
-  font-weight: bold;
+    font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free Solid", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
 }
 
 /* MAIN BAR */
 window#waybar {
-  background: #000000; /* background: #141414; */       /* Slightly darker slate-black color */
-  color: #e6e6e6;
-  box-shadow: none;          /* Removes the shadow under the bar */
-  
-  /* Use an inset box-shadow instead of border-top so it never gets clipped by the screen edge */
-  box-shadow: inset 0 1px 0 0 #000000;
-}
-
-/* =========================
-   FORCE LEFT ALIGNMENT
-   ========================= */
-
-/* remove spacing that pushes workspace in */
-#workspaces {
-  margin: 0;
-  padding: 0;
-}
-
-/* LEFT EDGE ALIGNMENT FIX */
-.modules-left {
-  margin-left: 0;
-  padding-left: 0;
+  background: #000000;
+  color: #dcdcdc;
+  /* Keep your existing shadow */
+  box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.04);
+  /* Add the bottom border */
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* ================= WORKSPACES ================= */
 
 #workspaces button {
-  color: #888888;           /* dim white */
+  color: #777777;
   background: transparent;
-
-  padding: 0 2px;
+  padding: 0 4px;
   margin: 2px 2px;
-
   border: none;
-  border-radius: 0;
-  min-width: 18px;
+  min-width: 16px;
 }
 
-/* hover */
 #workspaces button:hover {
-  background: transparent;
-  color: #cfcfcf;
+  color: #bdbdbd;
 }
 
-/* active workspace */
+#workspaces button.visible {
+  color: #9a9a9a;
+}
+
 #workspaces button.focused {
-  color: #e6e6e6;           /* same as the rest of the bar text */
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  color: #ffffff;
+  background: rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(160,160,160,0.55);
 }
 
-/* urgent */
 #workspaces button.urgent {
   color: #ef4444;
-  background: transparent;
+  background: rgba(239,68,68,0.08);
 }
 
-/* ================= OTHER MODULES ================= */
+/* ================= MODULES ================= */
 
-#sway-window, #mpris, #pulseaudio, #sway-language, #clock, #tray {
-  box-shadow: none;        
-}
-
-#sway-window {
+#pulseaudio,
+#sway-language,
+#clock,
+#network,
+#tray,
+#mpris {
   color: #dcdcdc;
 }
 
-#mpris {
-  color: #cfcfcf;
+/* NETWORK STATES */
+#network {
+    color: #9ca3af; /* grey icon (neutral) */
 }
 
-#pulseaudio {
-  color: #e6e6e6;
+/* UP state = green text */
+#network.wifi,
+#network.ethernet {
+    color: #22c55e;
 }
 
+/* DOWN state = red text */
+#network.disconnected {
+    color: #ef4444;
+}
+
+/* MUTED AUDIO */
 #pulseaudio.muted {
   color: #ff6b6b;
 }
 
-#sway-language {
+#custom-power {
+    color: rgba(220, 38, 38, 0.6);
+    padding: 0 6px;
+    border-radius: 0px;
+    transition: all 0.15s ease;
+}
+
+#custom-power:hover {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.08);
+}
+
+/* TOOLTIP */
+tooltip {
+    background: #000000;
+    border: 1px solid rgba(200, 200, 200, 0.15);
+}
+
+tooltip label {
+    color: #dcdcdc;
+    font-family: "JetBrainsMono Nerd Font Mono";
+    padding: 6px;
+}
+
+tooltip label {
   color: #e6e6e6;
-}
-
-#clock {
-  color: #ffffff;
-}
-
-#tray {
-  padding: 0 6px;
+  padding: 6px;
 }
 
 /* separator */
 #custom-sep {
   color: rgba(200, 200, 200, 0.25);
-}
-
-/* ================= TOOLTIP / CALENDAR STYLING ================= */
-tooltip {
-  background: #141414;       
-  border: 1px solid rgba(200, 200, 200, 0.25); 
-  border-radius: 0px;        
-}
-
-tooltip label {
-  color: #e6e6e6;
-  font-family: "JetBrains Mono"; 
-  padding: 6px;
 }

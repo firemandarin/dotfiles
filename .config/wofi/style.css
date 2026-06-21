@@ -1,0 +1,29 @@
+window {
+    background-color: #2b2b2b;   /* your requested dark grey */
+    border: 1px solid rgba(192, 192, 192, 0.45); /* silver outline */
+    border-radius: 0px;
+}
+
+#outer-box {
+    margin: 10px;
+    background: transparent;
+}
+
+#input {
+    margin: 10px;
+    padding: 10px;
+    background-color: #1f1f1f;
+    color: #dcdcdc;
+    border: 1px solid rgba(192, 192, 192, 0.25);
+}
+
+#entry {
+    padding: 10px;
+    color: #dcdcdc;
+    background: transparent;
+}
+
+#entry:selected {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-left: 2px solid rgba(192, 192, 192, 0.6);
+}
