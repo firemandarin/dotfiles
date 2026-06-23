@@ -22,7 +22,7 @@ focus_follows_mouse no
 mouse_warping output
 
 ### APPEARANCE
-gaps inner 10
+gaps inner 5
 smart_gaps on
 font pango:Noto Sans Regular 11
 
@@ -40,8 +40,9 @@ client.urgent           #FF5555 #FF5555 #FFFFFF #FF5555 #FF5555
 client.placeholder      #000000 #000000 #FFFFFF #000000 #000000
 
 ### OUTPUT / MONITOR
-#output * bg ~/Pictures/Wallpapers/a_forest_of_trees_with_fog.jpg fill
+#output * bg ~/Pictures/Wallpapers/daniel-leone-g30P1zcOzXo-unsplash.jpg fill
 output * bg ~/Pictures/Wallpapers/wallhaven-49vrzd.jpg fill
+#output "*" bg #3e646f solid_color
 output DP-2 mode 2560x1440@164.958Hz adaptive_sync on
 
 ### ENVIRONMENT (FIXED FOR DEBIAN / WAYLAND)
@@ -56,23 +57,23 @@ exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 #exec autotiling
 
 ### AUTOSTART
+### AUTOSTART
 exec mako
-exec_always --no-startup-id killall waybar; waybar
-exec_always --no-startup-id killall autotiling; autotiling
+exec_always --no-startup-id "sleep 2 && killall waybar; waybar"
+exec_always --no-startup-id "sleep 2 && killall autotiling; autotiling"
 exec nm-applet --indicator
-exec qbittorrent 
+exec qbittorrent
 # qbittorrent removed from here if you prefer manual start
 
 ### LOCKING / IDLE (STABLE PATTERN)
 exec swayidle -w \
-     timeout 300 'swaylock -f -c 000000' \
-     timeout 600 'swaymsg "output * power off"' \
-     resume 'swaymsg "output * power on"' \
-     before-sleep 'swaylock -f -c 000000'
+    timeout 300 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep '~/.config/sway/scripts/lock-macos.sh'
 
 ### IDLE RULES
 # Only inhibit idle for fullscreen apps
-for_window [app_id=".*"] inhibit_idle fullscreen
+#for_window [app_id=".*"] inhibit_idle fullscreen
 
 ### MEDIA CONTROLS
 bindsym XF86AudioRaiseVolume exec pamixer -i 5
@@ -90,7 +91,6 @@ bindsym $mod+f exec firefox
 bindsym $mod+e exec thunar
 bindsym $mod+g exec geany
 bindsym $mod+q kill
-#bindsym $mod+x kill
 bindsym $mod+Shift+r reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
 bindsym $mod+shift+f fullscreen toggle
@@ -153,6 +153,9 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 ### WINDOW RULES (CLEANED)
+for_window [app_id="gsimplecal"] floating enable, move position bottom right
+for_window [class="gsimplecal"] floating enable, sticky enable
+for_window [class="gsimplecal"] move absolute position 1500 800
 for_window [app_id="qbittorrent"] floating enable, resize set 960 540, move position center
 for_window [app_id="imv"] floating enable, resize set 960 540, move position center
 for_window [app_id="galculator"] floating enable, move position center

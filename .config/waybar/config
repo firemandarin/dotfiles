@@ -2,7 +2,7 @@
   "layer": "top",
   "position": "bottom",
   "height": 36,
-  "spacing": 6,
+  "spacing": 8,
 
   "modules-left": [
     "sway/workspaces",
@@ -11,7 +11,7 @@
   ],
 
   "modules-center": [
-
+   
   ],
 
   "modules-right": [
@@ -23,6 +23,8 @@
     "custom/sep",
     "network",
     "custom/sep",
+    "custom/updates",
+    "custom/sep",
     "clock",
     "custom/sep",
     "group/tray-drawer",
@@ -30,7 +32,7 @@
     "custom/power"
   ],
 
-"sway/workspaces": {
+  "sway/workspaces": {
     "disable-scroll": false,
     "all-outputs": false,
     "format": "{name}",
@@ -38,14 +40,14 @@
     "reverse-scroll": false,
     "on-click": "activate",
     "persistent-workspaces": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": []
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": []
     }
-},
+  },
 
-"mpris": {
+  "mpris": {
     "format": "<i><span color='#9ca3af'>🎵 {artist} - {title}</span></i>",
     "format-paused": "<i><span color='#9ca3af'> {artist} - {title}</span></i>",
     "format-stopped": "<i><span color='#9ca3af'> Not playing</span></i>",
@@ -53,50 +55,83 @@
     "interval": 1
   },
 
-"pulseaudio": {
-  "format": "  {volume}%",
-  "format-muted": "  {volume}%",
-  "format-icons": {
-    "default": ["", "", ""]
+  "sway/window": {
+    "format": "{}",
+    "max-length": 50,
+    "separate-outputs": true,
+    "rewrite": {
+      "(.*) — Mozilla Firefox": "Firefox",
+      "Thunar": "Thunar",
+      "foot": "Foot",
+      "kitty": "Kitty",
+      "Steam": "Steam",
+      ".*Steam.*": "Steam",
+      "Spotify": "Spotify",
+      "Remmina": "Remmina",
+      "": "Desktop"
+    }
   },
-  "scroll-step": 5,
-  "on-click": "pavucontrol",
-  "on-click-middle": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-},
 
-"sway/language": {
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 Muted",
+    "format-icons": {
+      "default": ["", "", ""]
+    },
+    "scroll-step": 5,
+    "on-click": "pavucontrol",
+    "on-click-middle": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+  },
+
+  "sway/language": {
     "format": "🌐 {short}",
     "on-click": "swaymsg input * xkb_switch_layout next"
   },
 
-"network": {
-  "format-wifi": " {essid} up",
-  "format-ethernet": " ",
-  "format-disconnected": "  ",
-  "tooltip": false,
-  "interval": 5,
-  "on-click": "nm-connection-editor"
-},
+  "network": {
+    "format-wifi": "  {essid}",
+    "format-ethernet": " ",
+    "format-disconnected": "󰖪 ",
+    "tooltip": false,
+    "interval": 5,
+    "on-click": "nm-connection-editor"
+  },
 
-"clock": {
-  "format": "  {:%H:%M}",
-  "tooltip-format": "<big>{:%A, %d %B %Y}</big>\n\n<tt><small>{calendar}</small></tt>",
-  "calendar": {
-    "mode": "month",
-    "weeks-pos": "left",
-    "on-scroll": 1,
-    "format": {
-      "months": "<span color='#dcdcdc'><b>{}</b></span>",
-      "days": "<span>{}</span>",
-      "weekdays": "<span color='#9ca3af'><b>{}</b></span>",
-      "today": "<span color='#22c55e'><b><u>{}</u></b></span>"
-    }
-  }
-},
+  "disk": {
+    "interval": 30,
+    "format": "  {percentage_free}%",
+    "path": "/home",
+    "tooltip-format": "{used} used out of {total} on {path} ({percentage_used}% used)"
+  },
+
+  "clock": {
+    "format": "  {:%H:%M}",
+    "tooltip-format": "<big>{:%A, %d %B %Y}</big>\n\n<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "weeks-pos": "left",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#dcdcdc'><b>{}</b></span>",
+        "days": "<span>{}</span>",
+        "weekdays": "<span color='#9ca3af'><b>{}</b></span>",
+        "today": "<span color='#22c55e'><b><u>{}</u></b></span>"
+      }
+    },
+    "on-click": "gsimplecal"
+  },
 
   "tray": {
     "spacing": 8
   },
+  
+  "custom/updates": {
+    "format": "  {}",
+    "interval": 3600, // Check every hour
+    "exec": "~/.config/sway/scripts/deb_update_checker.sh",
+    "on-click": "kitty -e 'sudo apt update && sudo apt upgrade'",
+    "signal": 8
+},
 
   "group/tray-drawer": {
     "orientation": "horizontal",
@@ -113,22 +148,14 @@
     "format": "❮",
     "tooltip": false
   },
-  
-  "custom/sep": {
-  "format": "│"
-},
 
-"sway/window": {
-    "format": "{app_id}",
-    "max-length": 30,
-    "rewrite": {
-        "": "Desktop"
-    }
-},
+  "custom/sep": {
+    "format": "│"
+  },
 
   "custom/power": {
     "format": "⏻ ",
-    "on-click": "~/.config/wofi/powermenu.sh",
+    "on-click": "/home/lesszi/.config/wofi/powermenu.sh",
     "tooltip": false
   }
 }
